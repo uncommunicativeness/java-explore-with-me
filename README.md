@@ -1,2 +1,3 @@
 # java-explore-with-me
-Template repository for ExploreWithMe project.
+
+## Pull Request: https://github.com/uncommunicativeness/java-explore-with-me/pull/1
