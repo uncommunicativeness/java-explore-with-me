@@ -122,3 +122,20 @@ create table public.requests
 alter table public.requests
     owner to "user";
 
+create table public.comments
+(
+    id         bigint not null
+        primary key,
+    created_on timestamp,
+    text       text   not null,
+    event_id   bigint
+        constraint comments_event_const
+            references public.events,
+    user_id    bigint
+        constraint comments_user_const
+            references public.users
+);
+
+alter table public.comments
+    owner to "user";
+
