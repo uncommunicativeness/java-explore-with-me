@@ -8,6 +8,8 @@ import ru.practicum.explorewithme.model.event.Event;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Component
 public class EventMapper {
@@ -73,6 +75,14 @@ public class EventMapper {
                 .state(model.getState().name())
                 .title(model.getTitle())
                 .views(model.getViews())
+                .comment(model.getComments() != null ? model.getComments().stream()
+                        .map(comment -> EventFullDto.Comment.builder()
+                                .id(comment.getId())
+                                .text(comment.getText())
+                                .userName(comment.getUser().getName())
+                                .userEmail(comment.getUser().getEmail())
+                                .createdOn(comment.getCreatedOn())
+                                .build()).collect(Collectors.toList()) : new ArrayList<>())
                 .build();
     }
 }
