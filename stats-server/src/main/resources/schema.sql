@@ -5,14 +5,13 @@ alter sequence statistic_seq owner to "user";
 
 create table public.statistics
 (
-    id        bigint       not null
-        primary key,
-    app       varchar(255) not null,
-    ip        varchar(255) not null,
-    timestamp timestamp    not null,
-    uri       varchar(255) not null
+    id        BIGINT        NOT NULL,
+    app       VARCHAR(255)  NOT NULL,
+    uri       VARCHAR(2000) NOT NULL,
+    ip        VARCHAR(45)   NOT NULL,
+    timestamp TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    CONSTRAINT pk_statistics PRIMARY KEY (id)
 );
 
 alter table public.statistics
     owner to "user";
-

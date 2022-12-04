@@ -45,7 +45,6 @@ public class EventService {
     CategoryRepository categoryRepository;
     UserRepository userRepository;
     RequestRepository requestRepository;
-
     StatisticRequestService service;
     EventMapper eventMapper;
     RequestMapper requestMapper;
@@ -263,6 +262,7 @@ public class EventService {
 
         event.setViews(event.getViews() + 1);
 
+        // Сохраняем информацию в сервисе статистики
         service.hit(request);
 
         return eventMapper.toFullDto(event);
@@ -319,9 +319,15 @@ public class EventService {
                         ),
                 PageRequest.of(from / size, size, sort));
 
+        // Сохраняем информацию в сервисе статистики
+        service.hitAll(request, events.stream()
+                .map(Event::getId)
+                .map(id -> Long.toString(id))
+                .collect(Collectors.toList())
+        );
+
         return events.stream()
                 .map(eventMapper::toShortDto)
-                .peek(dto -> service.hit(request, dto))
                 .collect(Collectors.toList());
     }
 
@@ -367,6 +373,7 @@ public class EventService {
         return eventMapper.toFullDto(event);
     }
 
+    @Transactional
     public EventFullDto reject(Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException(String.format("Failed to find event with id=%d", eventId)));

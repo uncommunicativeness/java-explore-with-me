@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.dto.StatisticDto;
 import ru.practicum.explorewithme.dto.StatisticRequestInDto;
+import ru.practicum.explorewithme.dto.StatisticRequestListInDto;
 import ru.practicum.explorewithme.model.repository.StatisticRequestRepository;
 import ru.practicum.explorewithme.util.mapper.StatisticRequestMapper;
 
@@ -27,6 +28,11 @@ public class StatisticRequestService {
     @Transactional
     public void hit(StatisticRequestInDto dto) {
         repository.save(mapper.toModel(dto));
+    }
+
+    @Transactional
+    public void hits(StatisticRequestListInDto dto) {
+        repository.saveAll(mapper.toModelList(dto));
     }
 
     public List<StatisticDto> getStatistic(String startString, String endString, List<String> uris, Boolean unique) {

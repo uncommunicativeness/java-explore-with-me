@@ -12,7 +12,7 @@ import java.util.List;
 public interface StatisticRequestRepository extends JpaRepository<StatisticRequest, Long> {
     @Query("SELECT new ru.practicum.explorewithme.dto.StatisticDto(s.app, s.uri, COUNT(s.ip)) " +
             "FROM StatisticRequest AS s " +
-            "WHERE s.timestamp BETWEEN :start AND :end AND (COALESCE(:uris, NULL) IS NULL OR s.uri IN :uris) " +
+            "WHERE s.timestamp BETWEEN :start AND :end AND (:uris  IS NULL OR s.uri IN :uris) " +
             "GROUP BY s.uri, s.app")
     List<StatisticDto> getStatistic(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
                                     @Param("uris") List<String> uris);
@@ -20,7 +20,7 @@ public interface StatisticRequestRepository extends JpaRepository<StatisticReque
     @Query("SELECT new ru.practicum.explorewithme.dto.StatisticDto(s.app, s.uri, COUNT (DISTINCT s.ip)) " +
             "FROM StatisticRequest AS s " +
             "WHERE s.timestamp BETWEEN :start AND :end " +
-            "AND (COALESCE(:uris, NULL) IS NULL OR s.uri IN :uris) " +
+            "AND (:uris  IS NULL OR s.uri IN :uris) " +
             "GROUP BY s.uri, s.app")
     List<StatisticDto> getUniqueStatistic(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end,
                                           @Param("uris") List<String> uris);

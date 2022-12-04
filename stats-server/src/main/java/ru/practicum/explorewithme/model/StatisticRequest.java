@@ -22,10 +22,10 @@ public class StatisticRequest {
     @Column(name = "app", nullable = false)
     String app;
 
-    @Column(name = "uri", nullable = false)
+    @Column(name = "uri", nullable = false, length = 2000)
     String uri;
 
-    @Column(name = "ip", nullable = false)
+    @Column(name = "ip", nullable = false, length = 45)
     String ip;
 
     @Column(name = "timestamp", nullable = false)
