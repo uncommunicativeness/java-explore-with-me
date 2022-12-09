@@ -3,6 +3,7 @@ package ru.practicum.explorewithme.model.event;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.practicum.explorewithme.model.Category;
+import ru.practicum.explorewithme.model.Comment;
 import ru.practicum.explorewithme.model.Compilation;
 import ru.practicum.explorewithme.model.User;
 import ru.practicum.explorewithme.model.request.Request;
@@ -81,6 +82,9 @@ public class Event {
 
     @ManyToMany(mappedBy = "events")
     Set<Compilation> compilations = new HashSet<>();
+
+    @OneToMany(mappedBy = "event")
+    List<Comment> comments = new ArrayList<>();
 
     public void addCompilation(Compilation compilation) {
         if (compilation == null) {

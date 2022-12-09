@@ -34,6 +34,9 @@ public class User {
     @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Request> requests = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    List<Comment> comments = new ArrayList<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
